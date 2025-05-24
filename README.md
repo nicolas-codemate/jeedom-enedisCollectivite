@@ -1,4 +1,4 @@
-# geoloc
+# enedisCollectivite
 
 Ce plugin permet de collecter les données de consommation électrique des collectivités à partir des compteurs Enedis.
 
