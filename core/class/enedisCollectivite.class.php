@@ -25,6 +25,12 @@ class enedisCollectivite extends eqLogic
     public const ENEDIS_COLLECTIVITE_BASE_URL = 'https://gw.ext.prod.api.enedis.fr';
     private const TOKEN_CACHE_KEY = 'enedisCollectivite_access_token';
 
+    public const API_URI_DAILY_CONSUMPTION = 'mesures/v1/metering_data/daily_consumption';
+    public const API_URI_DAILY_PRODUCTION = 'mesures/v1/metering_data/daily_production';
+    public const API_URI_CONSUMPTION_LOAD_CURVE = 'mesures/v1/metering_data/consumption_load_curve';
+    public const API_URI_PRODUCTION_LOAD_CURVE = 'mesures/v1/metering_data/production_load_curve';
+    public const API_URI_DAILY_MAX_POWER = 'mesures/v1/metering_data/daily_consumption_max_power';
+
     public static $_widgetPossibility = array(
         'custom' => true,
         'parameters' => array(
@@ -122,7 +128,13 @@ class enedisCollectivite extends eqLogic
                         // mesures/v1/metering_data/daily_consumption?usage_point_id=12345678901234&start=2023-01-01&end=2023-12-31
                         // mesures/v1/metering_data/daily_production?usage_point_id=12345678901234&start=2023-01-01&end=2023-12-31
 
-                        $data = $this->callEnedisCollectiviteApi('mesures/v1/metering_data/daily_'.$measureType.'?start='.$start_date.'&end='.$end_date.'&usage_point_id='.$usagePointId);
+                        if ('consumption' === $measureType) {
+                            $uri = self::API_URI_DAILY_CONSUMPTION;
+                        } else {
+                            $uri = self::API_URI_DAILY_PRODUCTION;
+                        }
+
+                        $data = $this->callEnedisCollectiviteApi($uri.'?start='.$start_date.'&end='.$end_date.'&usage_point_id='.$usagePointId);
                         if (isset($data['meter_reading']) && isset($data['meter_reading']['interval_reading'])) {
                             foreach ($data['meter_reading']['interval_reading'] as $value) {
                                 $valueTimestamp = strtotime($value['date']);
@@ -173,7 +185,14 @@ class enedisCollectivite extends eqLogic
                             // /mesures/v1/metering_data/consumption_load_curve?usage_point_id=12345678901234&start=2023-01-01&end=2023-12-31
                             // /mesures/v1/metering_data/production_load_curve?usage_point_id=12345678901234&start=2023-01-01&end=2023-12-31
 
-                            $data = $this->callEnedisCollectiviteApi('mesures/v1/metering_data/'.$measureType.'_load_curve?start='.$start_date_load.'&end='.$end_date_load.'&usage_point_id='.$usagePointId);
+
+                            if ('consumption' === $measureType) {
+                                $uri = self::API_URI_CONSUMPTION_LOAD_CURVE;
+                            } else {
+                                $uri = self::API_URI_PRODUCTION_LOAD_CURVE;
+                            }
+
+                            $data = $this->callEnedisCollectiviteApi($uri.'start='.$start_date_load.'&end='.$end_date_load.'&usage_point_id='.$usagePointId);
 
                             if (isset($data['meter_reading']) && isset($data['meter_reading']['interval_reading'])) {
                                 foreach ($data['meter_reading']['interval_reading'] as $value) {
@@ -207,7 +226,7 @@ class enedisCollectivite extends eqLogic
                             // Daily Max Power End points is
                             // /mesures/v1/metering_data/daily_consumption_max_power
 
-                            $data = $this->callEnedisCollectiviteApi('mesures/v1/metering_data/daily_consumption_max_power?start='.$start_date.'&end='.$end_date.'&usage_point_id='.$usagePointId);
+                            $data = $this->callEnedisCollectiviteApi(self::API_URI_DAILY_MAX_POWER.'?start='.$start_date.'&end='.$end_date.'&usage_point_id='.$usagePointId);
                             if (isset($data['meter_reading']) && isset($data['meter_reading']['interval_reading'])) {
                                 foreach ($data['meter_reading']['interval_reading'] as $value) {
                                     if (empty($_startDate) && $value['date'] >= date('Y-m-d', strtotime('-1 day '.$end_date))) {
