@@ -21,23 +21,29 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
-<style>
-	#bt_savePluginConfig {
-		display: none;
-	}
-</style>
 
-<form class="form-horizontal">
-	<fieldset>
-		<div class="form-group">
-			<label class="col-sm-4 control-label">{{Autoriser l'accès aux serveurs Enedis}}
-				<sup><i class="fas fa-question-circle tooltips" title="{{Cliquez sur l'image pour autoriser la liaison entre votre compte market Jeedom et Enedis}}"></i></sup>
-			</label>
-			<div class="col-sm-4">
-				<a href="https://cloud.jeedom.com/frontend/login.html?service=enedis2" target="_blank">
-					<img src="/plugins/enedis/core/config/link_enedis.png">
-				</a>
-			</div>
-		</div>
-	</fieldset>
+<form>
+    <div class="col-sm-6">
+        <legend><i class="fas fa-folder-open"></i>{{Authentification}}</legend>
+        <div class="form-group row">
+            <label for="apiKey" class="col-sm-6 col-form-label">{{Api Key}}</label>
+            <div class="col-sm-6">
+                <input type="text"
+                       id="apiKey"
+                       class="configKey form-control "
+                       placeholder="{{Api Key}}"
+                       data-l1key="configuration" data-l2key="apiKey"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="apiSecret" class="col-sm-6 col-form-label">{{Api Secret}}</label>
+            <div class="col-sm-6">
+                <input type="password"
+                       id="apiSecret"
+                       class="configKey form-control"
+                       placeholder="{{Api Secret}}"
+                       data-l1key="configuration" data-l2key="apiSecret"/>
+            </div>
+        </div>
+    </div>
 </form>
