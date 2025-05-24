@@ -13,7 +13,7 @@
   "hasOwnDeamon": false,
   "maxDependancyInstallTime": 0,
   "changelog": "https://github.com/nicolas-codemate/jeedom-enedisCollectivite/blob/main/docs/fr_FR/changelog.md",
-  "documentation": "https://github.com/nicolas-codemate/jeedom-enedisCollectivite/blob/main/README.m",
+  "documentation": "https://github.com/nicolas-codemate/jeedom-enedisCollectivite/blob/main/README.md",
   "language": [
     "fr_FR"
   ],
