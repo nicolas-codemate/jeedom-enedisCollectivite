@@ -8,7 +8,7 @@ Sur le site [mon-compte-collectivite.enedis.](mon-compte-collectivite.enedis) :
  - dans le menu "Mes Accès API"
  - Ajouter une nouvelle application
  - Copier l'API Key et le Secret Key et les renseigner dans la configuration du plugin
- - dans l'application crée dans Enedes, ajouter les API suivantes :
+ - dans l'application crée dans Enedis, ajouter les API suivantes :
    - `mesure_syncrone`
  - activer la collecte des données pour chaque PDL
 
